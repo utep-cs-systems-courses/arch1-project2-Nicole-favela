@@ -7,27 +7,7 @@ char unsigned red_on =0,green_on = 0, led_changed = 0;
 int tones [] = {1500, 9000,0,3000,1000,7000, 0,6000}; //array that stores different periods for use in changing buzzer states
 
 char i = 0;//used to iterate tones array
-/*
-char button_states()
-{
-  static char st = 0;
-  switch(st){
-  case 0:
-    red_on = 1;
-    buzzer_set_period(200);
-    st = 1;
-    break;
-  case 1:
-    red_on = 0;
-    buzzer_set_period(1500);
-    st = 2;
-    break;
-   
 
-  }
-  
-}
-*/
 char toggle_red()		/* always toggle! */
 {
   static char state = 0;
