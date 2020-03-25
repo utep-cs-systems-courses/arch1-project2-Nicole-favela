@@ -3,12 +3,12 @@
 #include "led.h"
 #include "my_buzzer.h"
 #include "my_switches.h"
-//static enum {off = 0,on = 1,} buzzer_tone;
 char unsigned red_on =0,green_on = 0, led_changed = 0;
-int tones[] = {1000,0,200,0,1800,0,1500,0,3000,0,4000,100,0,2500,0,20};
-//my code
+int tones [] = {1500, 9000,0,3000,1000,7000, 0,6000}; //array that stores different periods for use in changing buzzer states
+
+char i = 0;//used to iterate tones array
+/*
 char button_states()
-  
 {
   static char st = 0;
   switch(st){
@@ -25,7 +25,9 @@ char button_states()
    
 
   }
+  
 }
+*/
 char toggle_red()		/* always toggle! */
 {
   static char state = 0;
@@ -52,8 +54,7 @@ char toggle_green()	/* only toggle green if red is on!  */
   }
   return changed;
 }
-
-
+//state machine for switches
 void state_advance()		/* alternate between toggling red & green */
 {
   char changed = 0;  
@@ -66,45 +67,45 @@ void state_advance()		/* alternate between toggling red & green */
 
   led_changed = changed;
   led_update();
-  int i = 0;
   int count = 0;
   switch(select_button(count))
   {
     case 1:
-      buzzer_set_period(tones[i++]);
-      //buzzer_set_period(0);
+      buzzer_set_period(tones[i++]); //cyles through possible tones for button 1 (switch_state_down)
+   
       break;
     case 2:
-      turn_buzzer_off();
+      turn_buzzer_off();//turn sound from first button off
       break;
     case 3:
       led_update();
       break;
 
     case 4:
-      buzzer_set_period(4000);
+      buzzer_set_period(4000);//make one buzzer tone with frequency 2000Hz
       break;
   }
 }
+//returns int value to determine which switch was presssed
 int select_button(button)
 {
-  if(switch_state_down)
+  if(switch_state_down)//first switch
   {
     button = 1;
   }
-  else if(sw_state_down_1)
+  else if(sw_state_down_1)//2nd switch
   {
     button = 2;
   }
-  else if(sw_state_down_2)
+  else if(sw_state_down_2)//3rd switch
   {
     button =3;
   }
-  else if(sw_state_down_3)
+  else if(sw_state_down_3)//4th switch
   {
     button = 4;
   }
-  return button;
+  return button;//returns button pressed as an int
 }
 
 
