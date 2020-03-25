@@ -3,8 +3,8 @@
 #include "my_switches.h"
 #include "my_buzzer.h"
 #include "stateMachines.h"
-//unsigned char red_on = 0, green_on = 0;/
-//unsigned char led_changed = 0;
+
+//static enum {led_off = 0, dim = 1, led_on =2}led_states;
 char button = 0;
 static char redVal[] = {0, LED_RED}, greenVal[] = {0, LED_GREEN};
 void turn_led_off()
@@ -32,72 +32,40 @@ void led_init()
 void led_update(button)
 {
   if (led_changed) {
-    char ledFlags = redVal[red_on] | greenVal[green_on];
+    char ledFlags = redVal[red_on] | greenVal[green_on];//flashes ledso
     
     P1OUT &= (0xff-LEDS) | ledFlags; // clear bit for off leds
     P1OUT |= ledFlags;		     // set bit for on leds
   }
     if(switch_state_changed){
       char ledFlags = 0;
-      switch(select_button(button)){
+      switch(select_button(button)){ //does something different for every button pushed
       case 1:
-	ledFlags |= LED_RED;
+	//ledFlags |= LED_RED;
+	ledFlags |= redVal[red_on];//flashes red
+	P1OUT &= (0xff^LEDS) | ledFlags; 
+	P1OUT |= ledFlags;//outputs leds 
 	break;
       case 2:
+	//turns green on 
 	ledFlags |= LED_GREEN;
+	ledFlags |= LED_RED;//keeps red on
+	//ledFlags |= LEDS;
+	P1OUT &= (0xff^LEDS) | ledFlags;
+	P1OUT |= ledFlags;
 	break;
       case 3:
-	ledFlags = 0;
+	ledFlags = 0;//dims leds
+	P1OUT &= (0xff^LEDS) | ledFlags;
+	P1OUT |= ledFlags;
 	break;
       case 4:
-	ledFlags = 0;
+	ledFlags = 0;//dims leds
+	P1OUT &= (0xff ^LEDS) | ledFlags;
+	P1OUT |= ledFlags;
 	break;
     }
-	P1OUT &= (0xff-LEDS) | ledFlags;
-	P1OUT |= ledFlags;
-    }
-      /* if(switch_state_down){
-    char ledFlags = 0;
-    ledFlags |= switch_state_down ? LED_GREEN :0;
-    ledFlags |= switch_state_down ? 0:LED_RED;
-    P1OUT &= (0xff-LEDS) | ledFlags;
-    P1OUT |= ledFlags;
-  
-  }
-  if(sw_state_down_1){
-    char ledFlags = 0;
-    ledFlags |= sw_state_down_1 ? LED_RED : 0;
-    ledFlags |= sw_state_down_1 ? 0: LED_GREEN;
-    P1OUT &= (0xff-LEDS) | ledFlags;
-    P1OUT |= ledFlags;
-
-  }
-  if (sw_state_down_2){//button 3
-    char ledFlags = 0;
-    // ledFlags |= sw_state_down_2;
-    // ledFlags |= sw_state_down_2 ? LED_GREEN: LED_RED;
-    P1OUT &= (0xff ^LEDS) | ledFlags;
-    P1OUT |=ledFlags;
     
-  }
-  if(sw_state_down_3){
-    char ledFlags = 0;
-    /* ledFlags |= sw_state_down_3 ? 0:0;
-
-    P1OUT &= (0xff -LEDS) | ledFlags;
-    P1OUT |= ledFlags;
-      *//*
-    turn_led_off();
-  }
-  if(led_changed){
-     char ledFlags = redVal[red_on] | greenVal[green_on];
-    P1OUT &=(0xff - LEDS) | ledFlags;
-    P1OUT |= ledFlags;
-   
-    // turn_led_on();
-  }
-  
-  switch_state_changed = 0;
-	*/
+    }
 }
-
+    
