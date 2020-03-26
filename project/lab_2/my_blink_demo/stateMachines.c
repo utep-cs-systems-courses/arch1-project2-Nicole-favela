@@ -48,7 +48,7 @@ void state_advance()		/* alternate between toggling red & green */
   led_changed = changed;
   led_update();
   int count = 0;
-  switch(select_button(count))
+  switch(select_buttons(count))
   {
     case 1:
       buzzer_set_period(tones[i++]); //cyles through possible tones for button 1 (switch_state_down)
@@ -67,11 +67,12 @@ void state_advance()		/* alternate between toggling red & green */
   }
 }
 //returns int value to determine which switch was presssed
-int select_button(button)
+int select_buttons(button)
 {
   if(switch_state_down)//first switch
   {
     button = 1;
+    button = select_button(button);
   }
   else if(sw_state_down_1)//2nd switch
   {
