@@ -1,4 +1,4 @@
-## Description of "blinkey- buzzy toy"
+## Description of "blinky- buzzy toy"
 button 1.) plays a music tone when it is held down and constanly flashes red light
 button 2.) turns green light on as well as stops any buzzer sounds (if they
 get too much for your ears)
