@@ -4,7 +4,6 @@
 #include "my_buzzer.h"
 #include "stateMachines.h"
 
-//static enum {led_off = 0, dim = 1, led_on =2}led_states;
 char button = 0;
 static char redVal[] = {0, LED_RED}, greenVal[] = {0, LED_GREEN};
 void turn_led_off()
@@ -39,9 +38,8 @@ void led_update(button)
   }
     if(switch_state_changed){
       char ledFlags = 0;
-      switch(select_button(button)){ //does something different for every button pushed
+      switch(select_buttons(button)){ //does something different for every button pushed
       case 1:
-	//ledFlags |= LED_RED;
 	ledFlags |= redVal[red_on];//flashes red
 	P1OUT &= (0xff^LEDS) | ledFlags; 
 	P1OUT |= ledFlags;//outputs leds 
@@ -50,7 +48,6 @@ void led_update(button)
 	//turns green on 
 	ledFlags |= LED_GREEN;
 	ledFlags |= LED_RED;//keeps red on
-	//ledFlags |= LEDS;
 	P1OUT &= (0xff^LEDS) | ledFlags;
 	P1OUT |= ledFlags;
 	break;
