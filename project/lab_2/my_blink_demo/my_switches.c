@@ -30,7 +30,7 @@ switch_interrupt_handler()
 {
   char p2val = switch_update_interrupt_sense();
   switch_state_down = (p2val & SW0) ? 0 : 1; /* 0 when SW1 is up */
-  sw_state_down_1 = (p2val & SW1) ? 0 : 1;
+  sw_state_down_1 = (p2val & SW1) ? 0 : 1; //returns 1 id switch is pushed down
   sw_state_down_2 = (p2val & SW2) ? 0 : 1;
   sw_state_down_3 = (p2val & SW3) ? 0 : 1;
  
