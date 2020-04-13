@@ -72,19 +72,34 @@ int select_buttons(button)
   if(switch_state_down)//first switch
   {
     button = 1;
-    button = select_button(button);
+    if(button == select_button(button))
+    {
+      button = select_button(button);
+    }
   }
   else if(sw_state_down_1)//2nd switch
   {
     button = 2;
+    if(button == select_button(button))
+    {
+      button = select_button(button);
+    }
   }
   else if(sw_state_down_2)//3rd switch
   {
     button =3;
+    if(button == select_button(button))
+    {
+       button = select_button(button);
+    }
   }
   else if(sw_state_down_3)//4th switch
   {
     button = 4;
+    if(button = select_button(button))
+    {
+      button = select_button(button);
+    } 
   }
   return button;//returns button pressed as an int
 }
